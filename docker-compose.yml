@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  glances:
+    image: nicolargo/glances:latest-full
+    pid: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock
+      - ./glance.conf:/etc/glances/glance.conf
+    environment:
+      - "GLANCES_OPT=-w --export influxdb"
+    depends_on:
+      - influxdb
+  influxdb:
+    image: influxdb:1.8-alpine
+    environment:
+      - INFLUXDB_DB=glances
+      - INFLUXDB_USER=glances
+      - INFLUXDB_PASSWORD=glances
+    ports:
+      - '8086:8086'
+    volumes:
+      - influxdb_data:/var/lib/influxdb
+volumes:
+  influxdb_data: {}
