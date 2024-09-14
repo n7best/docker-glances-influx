@@ -1,5 +1,4 @@
-version: '3'
-
+version: '3.9'
 services:
   glances:
     image: nicolargo/glances:latest-full
@@ -8,11 +7,11 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock
       - type: bind
-        source: ${PWD}/glances.conf
-        target: /app/glances-abc.conf
+        source: ./glances.conf
+        target: /etc/glances/glances.conf
         read_only: true
     environment:
-      - "GLANCES_OPT=--export influxdb -C /app/glances-abc.conf"
+      - "GLANCES_OPT=--export influxdb -C /etc/glances/glances.conf"
     depends_on:
       - influxdb
   influxdb:
