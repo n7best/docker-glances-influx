@@ -6,9 +6,9 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock
-      - ./conf:/usr/glances-config
+      - "./conf/glances.conf:/glances/conf/glances.conf"
     environment:
-      - "GLANCES_OPT=--export influxdb2 -C /usr/glances-config/glances.conf"
+      - "GLANCES_OPT=--export influxdb2 -C /glances/conf/glances.conf"
     depends_on:
       - influxdb
   influxdb:
