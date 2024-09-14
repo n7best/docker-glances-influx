@@ -9,7 +9,7 @@ services:
       - /run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock
       - ./glances.conf:/glances/conf/glances.conf
     environment:
-      - "GLANCES_OPT=--export influxdb"
+      - "GLANCES_OPT=--export influxdb -d --config /glances/conf/glances.conf"
     depends_on:
       - influxdb
   influxdb:
