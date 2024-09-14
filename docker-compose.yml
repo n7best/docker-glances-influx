@@ -9,10 +9,10 @@ services:
       - /run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock
       - type: bind
         source: ${PWD}/glances.conf
-        target: /glances/conf/glances-abc.conf
+        target: /app/glances-abc.conf
         read_only: true
     environment:
-      - "GLANCES_OPT=--export influxdb -C /glances/conf/glances-abc.conf"
+      - "GLANCES_OPT=--export influxdb -C /app/glances-abc.conf"
     depends_on:
       - influxdb
   influxdb:
