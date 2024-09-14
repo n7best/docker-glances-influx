@@ -1,16 +1,12 @@
 version: '3.9'
 services:
   glances:
-    build:
-      context: ./
-      dockerfile: Dockerfile
+    image: nicolargo/glances:latest-full
     pid: host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock
-      - "./glances.conf:/glances/conf/glances.conf"
     environment:
-      - TZ=${TZ}
       - "GLANCES_OPT=--export influxdb"
     depends_on:
       - influxdb
@@ -19,8 +15,8 @@ services:
     restart: unless-stopped
     environment:
       - INFLUXDB_DB=glances
-      - INFLUXDB_USER=glances
-      - INFLUXDB_PASSWORD=glances
+      - INFLUXDB_USER=root
+      - INFLUXDB_PASSWORD=root
     ports:
       - '8086:8086'
     volumes:
