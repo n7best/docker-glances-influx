@@ -7,11 +7,11 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock
       - type: bind
-        source: ${PWD}/glances.conf.txt
-        target: /etc/glances/glances.conf
+        source: ${PWD}/conf
+        target: /usr/glances
         read_only: true
     environment:
-      - "GLANCES_OPT=--export influxdb -C /etc/glances/glances.conf"
+      - "GLANCES_OPT=--export influxdb -C /usr/glances/glances.conf"
     depends_on:
       - influxdb
   influxdb:
